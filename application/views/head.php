@@ -25,5 +25,5 @@
 	<!-- Bootstrap js -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- App js -->
-	<script src="assets/js/scripts.js"></script>
+	<script src="<?=base_url('assets/js/scripts.js')?>"></script>
  </head>
