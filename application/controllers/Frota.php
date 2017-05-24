@@ -1,11 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * { Class responsable for managing the operations over de cars }
+ */
 class Frota extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('frota_model');
 	}
+
+	/**
+	 * { Show the list of cars with pagination }
+	 */
 	public function index(){
 		$this->load->library('pagination');
 		$offset = $this->input->get('page') ?? 0;
@@ -25,9 +32,36 @@ class Frota extends CI_Controller {
 		$data['pagination'] = $this->pagination->create_links();
 		$this->load->view('init',$data);
 	}
+
+	/**
+	 * { function responsable for deleting a car form the database }
+	 *
+	 * @param      <int>  $id     The identifier of the car
+	 */
 	public function delete($id){
 		$this->frota_model->deleteCar($id);
 		$this->index();
+	}
+
+	/**
+	 * { load the edit car form with all data from the car }
+	 *
+	 * @param      <type>  $id     The identifier of the car
+	 */
+	public function edit($id){
+		$this->load->model('fabricante_model');
+		$data['fabricantes'] = $this->fabricante_model->getFabricantes();
+		$data['modelos'] = $this->fabricante_model->getModelos();
+		$data['cores'] = $this->fabricante_model->getCores();
+		$data['carInfo'] = $this->frota_model->getCarInfo($id);
+		$data['form_title'] = "Editar carro";
+		$data['active_menu'] = 'frota';
+		$data['content'] = 'frota/car_form';
+		$this->load->view('init',$data);
+	}
+
+	public function save(){
+
 	}
 }
 ?>

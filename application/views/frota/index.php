@@ -26,12 +26,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<td><?=$car->modelo ?></td>
 					<td><?=$car->cor ?></td>
 					<td><?=$car->matricula ?></td>
-					<td><?=$car->disponibilidade ?></td>
+					<td><?=$car->disponibilidade == 0 ? 'Indisponível' : 'Disponível'; ?></td>
 					<td>
-						<a class="js-delete" data-item="<?=$car->marca.','.$car->matricula ?>" data-url="<?=base_url()?>frota/delete/<?=$car->id?>">
+						<a href="<?=base_url()?>frota/edit/<?=$car->id?>">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 						</a>
-						<a href="<?=base_url()?>frota/delete/<?=$car->id?>">
+						&nbsp;&nbsp;&nbsp;
+						<a data-item="<?=$car->marca.','.$car->matricula ?>" data-url="<?=base_url()?>frota/delete/<?=$car->id?>">
 							<i class="fa fa-trash" aria-hidden="true"></i>
 						</a>
 					</td>
@@ -44,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- Modal para remover-->
-<div id="modal-delete" class="modal fade" tabindex="-1" role="dialog">
+<div id="modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

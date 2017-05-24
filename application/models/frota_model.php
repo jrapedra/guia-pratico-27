@@ -65,9 +65,26 @@ class Frota_model extends CI_Model{
 	}
 
 
+	/**
+	 * { delete the car from database }
+	 *
+	 * @param      <type>  $id     The identifier of the car to be deleted
+	 */
 	public function deleteCar($id){
 		$this->db->where('id', $id);
 		$this->db->delete('automoveis');
+	}
+
+	/**
+	 * Gets the car information.
+	 *
+	 * @param      <type>  $id     The identifier of the car
+	 *
+	 * @return     <type>  The car information.
+	 */
+	public function getCarInfo($id){
+		$this->db->from("automoveis")->where("id",$id);
+		return $this->db->get()->row();
 	}
 }
 ?>
