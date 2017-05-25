@@ -78,7 +78,7 @@ class Frota extends CI_Controller {
 		}
 	}
 
-	function validate_member($str)
+	function validate_matricula($matricula)
 	{
 		$field_value = $str; //this is redundant, but it's to show you how
 		//the content of the fields gets automatically passed to the method
