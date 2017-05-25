@@ -18,10 +18,10 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	
+
 	public function __construct(){
         parent::__construct();
-        $this->load->helper(array('form','url'));
+        $this->load->helper(array('form', 'url'));
         $this->load->library(array('session', 'form_validation', 'email'));
 	}
 
@@ -81,7 +81,6 @@ class Welcome extends CI_Controller {
 	{
 		$data['active_menu'] = 'about';
 		$data['content'] = 'about/index';
-		$data['css_files'] = ['styles.css'];
 		$data['myMission'] = array
 									(
 									'titulo' 	=> 'Missão',
@@ -144,7 +143,7 @@ class Welcome extends CI_Controller {
             $config['wordwrap'] = TRUE;
             $config['newline'] = "\r\n"; //use double quotes
             //$this->load->library('email', $config);
-            $this->email->initialize($config);                        
+            $this->email->initialize($config);
 
             //send mail
             $this->email->from($from_email, $name);
@@ -154,13 +153,17 @@ class Welcome extends CI_Controller {
             if ($this->email->send())
             {
                 // mail sent
-                $this->session->set_flashdata('msg','<div class="alert alert-success text-center">O seu e-mail foi enviado com sucesso. Obrigado!</div>');
-                redirect('welcome/contact/index');
+                $this->session->set_flashdata('msg_type','alert-success');
+                $this->session->set_flashdata('msg_error','O seu e-mail foi enviado com sucesso. Obrigado!');
+				$data['active_menu'] = 'contact';
+				$data['content'] = 'contact/index';
+                $this->load->view('init', $data);
             }
             else
             {
                 //error
-                $this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Existe um erro no envio do e-mail! Por favor tente novamente. Obrigado!</div>');
+                $this->session->set_flashdata('msg-type','alert-danger');
+                $this->session->set_flashdata('msg-error','Existe um erro no envio do e-mail! Por favor tente novamente. Obrigado!');
                 redirect('welcome/contact/index');
             }
         }

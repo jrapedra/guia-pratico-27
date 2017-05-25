@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <br />
 <div class="container">
     <form id="form-contact" class="form-horizontal" role="form" action="<?php base_url() ?>contact" method="POST">
@@ -51,8 +54,6 @@
                     </div>
                 </div>
                 </fieldset>
-                <?php echo form_close(); ?>
-                <?php echo $this->session->flashdata('msg'); ?>
             </div>
         </div>
     </form>
