@@ -66,7 +66,10 @@ class Frota extends CI_Controller {
 			//new car
 		}else{
 			//update car info
-			$this->frota_model->updateCarInfo($id,$this->input->post());
+			if($this->frota_model->updateCarInfo($id,$this->input->post())){
+				$this->session->set_flashdata('msg_','Automóvel alterado com sucesso');
+				$this->session->set_flashdata('msg_','Automóvel alterado com sucesso');
+			}
 		}
 	}
 }
