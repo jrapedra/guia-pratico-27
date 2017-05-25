@@ -3,8 +3,6 @@
     <form id="form-contact" class="form-horizontal" role="form" action="<?php base_url() ?>contact" method="POST">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 well">
-                <?php $attributes = array("class" => "form-horizontal", "name" => "contactform");
-                echo form_open("contactform/index", $attributes);?>
                 <fieldset>
                 <legend>Formulário de contacto</legend>
                 <div class="form-group">

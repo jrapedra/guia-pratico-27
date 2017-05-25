@@ -31,18 +31,18 @@ class Welcome extends CI_Controller {
 								(
 								array
 									(
-									'imgUrl' 	=> 'http://placehold.it/1900x1080&text=Slide One',
-									'caption' 	=> 'Caption 1'
+									'imgUrl' 	=> 'http://localhost/guia-pratico-27/assets/images/rent-a-car-1.jpg',
+									'caption' 	=> 'A sua principal escolha para viajar e descobrir um novo mundo...'
 									),
 								array
 									(
-									'imgUrl' 	=> 'http://placehold.it/1900x1080&text=Slide Two',
-									'caption' 	=> 'Caption 2'
+									'imgUrl' 	=> 'http://localhost/guia-pratico-27/assets/images/rent-a-car-2.jpg',
+									'caption' 	=> 'Todas as despesas incluídas nos preços afixados!'
 									),
 								array
 									(
-									'imgUrl' 	=> 'http://placehold.it/1900x1080&text=Slide Three',
-									'caption' 	=> 'Caption 3'
+									'imgUrl' 	=> 'http://localhost/guia-pratico-27/assets/images/rent-a-car-3.jpg',
+									'caption' 	=> 'A nossa frota é a mais moderna do mercado'
 									)
 								);
 		$data['myHeading'] = array
@@ -74,7 +74,6 @@ class Welcome extends CI_Controller {
 								);
 		$data['active_menu'] = 'home';
 		$data['content'] = 'home/index';
-		$data['css_files'] = ['styles.css'];
 		$this->load->view('init', $data);
 	}
 
@@ -110,11 +109,10 @@ class Welcome extends CI_Controller {
 	{
 		$data['active_menu'] = 'contact';
 		$data['content'] = 'contact/index';
-		$data['css_files'] = ['styles.css'];
 
         //set validation rules
-        $this->form_validation->set_rules('name', 'Nome', 'required');
-        $this->form_validation->set_rules('email', 'E-mail', 'required');
+        $this->form_validation->set_rules('name', 'Nome', 'trim|required|callback_name_validation');
+        $this->form_validation->set_rules('email', 'E-mail', 'trim|required|callback_email_validation');
         $this->form_validation->set_rules('subject', 'Assunto', 'required');
         $this->form_validation->set_rules('message', 'Mensagem', 'required');
 
@@ -139,7 +137,7 @@ class Welcome extends CI_Controller {
             $config['protocol'] = 'smtp';
             $config['smtp_host'] = 'ssl://smtp.gmail.com';
             $config['smtp_port'] = '465';
-            $config['smtp_user'] = 'guia.pratic@gmail.com';
+            $config['smtp_user'] = 'guia.pratico.27@gmail.com';
             $config['smtp_pass'] = 'Qwe123!_';
             $config['mailtype'] = 'html';
             $config['charset'] = 'iso-8859-1';
@@ -156,16 +154,42 @@ class Welcome extends CI_Controller {
             if ($this->email->send())
             {
                 // mail sent
-                $this->session->set_flashdata('msg','<div class="alert alert-success text-center">Your mail has been sent successfully!</div>');
+                $this->session->set_flashdata('msg','<div class="alert alert-success text-center">O seu e-mail foi enviado com sucesso. Obrigado!</div>');
                 redirect('welcome/contact/index');
             }
             else
             {
                 //error
-                $this->session->set_flashdata('msg','<div class="alert alert-danger text-center">There is error in sending mail! Please try again later</div>');
+                $this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Existe um erro no envio do e-mail! Por favor tente novamente. Obrigado!</div>');
                 redirect('welcome/contact/index');
             }
         }
 	}
+
+    public function name_validation($str)
+    {
+        if (!preg_match("/^[a-zA-Z ]+$/", $str))
+        {
+            $this->form_validation->set_message('name_validation', 'O campo %s deverá conter apenas letras e espaços');
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+
+    public function email_validation($str)
+    {
+        if (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str))
+        {
+            $this->form_validation->set_message('email_validation', 'O campo %s está mal formatado');
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
 
 }
