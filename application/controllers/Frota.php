@@ -12,6 +12,7 @@ class Frota extends CI_Controller {
 
 	/**
 	 * { Show the list of cars with pagination }
+	 * index method
 	 */
 	public function index(){
 		$this->load->library('pagination');
