@@ -86,5 +86,16 @@ class Frota_model extends CI_Model{
 		$this->db->from("automoveis")->where("id",$id);
 		return $this->db->get()->row();
 	}
+
+	public function updateCarInfo($id,$car_info){
+		$update_data = [
+					'modelo_id' => $car_info['modelo'],
+					'cor_id' => $car_info['cor'],
+					'disponibilidade' => $car_info['disponibilidade'],
+					'matricula' => $car_info['matricula']
+					];
+		$this->db->where('id',$id)->update('automoveis',$update_data);
+		return $this->db->affected_rows() == 1;
+	}
 }
 ?>

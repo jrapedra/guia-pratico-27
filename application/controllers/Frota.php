@@ -57,11 +57,17 @@ class Frota extends CI_Controller {
 		$data['form_title'] = "Editar carro";
 		$data['active_menu'] = 'frota';
 		$data['content'] = 'frota/car_form';
+		$data['action_url'] = base_url('frota/save/'.$id);
 		$this->load->view('init',$data);
 	}
 
-	public function save(){
-
+	public function save($id = -1){
+		if($id == -1){
+			//new car
+		}else{
+			//update car info
+			$this->frota_model->updateCarInfo($id,$this->input->post());
+		}
 	}
 }
 ?>

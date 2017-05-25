@@ -3,7 +3,7 @@
 <br>
 <br>
 <div class="container">
-    <form id="form-car" class="form-horizontal" role="form" action="<?php base_url() ?>frota/save/<?=$carInfo->id?>" method="POST">
+    <form id="form-car" class="form-horizontal" role="form" action="<?=$action_url ?>" method="POST">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 well">
                 <fieldset>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <label for="modelo" class="control-label">Cor</label>
+                        <label for="cor" class="control-label">Cor</label>
                     </div>
                     <div class="col-md-12">
                         <select class="form-control" id="cor" name="cor">
@@ -52,7 +52,7 @@
                         <label for="matricula" class="control-label">Matrícula</label>
                     </div>
                     <div class="col-md-12">
-                        <input class="form-control" name="matricula" id="matricula" pattern="[0-9][A-Z]{2}-[0-9][A-Z]{2}-[0-9][A-Z]{2}" placeholder="XX-XX-XX" type="text" value="<?=$carInfo->matricula ?>" />
+                        <input class="form-control" name="matricula" id="matricula" pattern="[0-9A-Z]{2}-[0-9A-Z]{2}-[0-9A-Z]{2}" placeholder="XX-XX-XX" type="text" value="<?=$carInfo->matricula ?>" />
                         <span class="text-danger"><?php echo form_error('matricula'); ?></span>
                     </div>
                 </div>
@@ -70,7 +70,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input name="submit" type="submit" class="btn btn-primary" value="Enviar" />
+                        <button id="save" name="save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <button id="cancel" name="cancel" type="button" class="btn btn-warning"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</button>
                     </div>
                 </div>
                 </fieldset>
