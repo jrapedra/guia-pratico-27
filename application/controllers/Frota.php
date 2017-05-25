@@ -8,6 +8,8 @@ class Frota extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('frota_model');
+
+		$this->load->library(array('session', 'form_validation', 'email'));
 	}
 
 	/**
@@ -63,14 +65,28 @@ class Frota extends CI_Controller {
 	}
 
 	public function save($id = -1){
+		$validation_rules = [['field'=>'','label'=>'','rules'=>'required|callback_validate_matricula','errors'=>['required'=>'É obrigatório indicar %s',]]];
 		if($id == -1){
 			//new car
 		}else{
 			//update car info
 			if($this->frota_model->updateCarInfo($id,$this->input->post())){
-				$this->session->set_flashdata('msg_','Automóvel alterado com sucesso');
-				$this->session->set_flashdata('msg_','Automóvel alterado com sucesso');
+				$this->session->set_flashdata('msg_type','alert-success');
+				$this->session->set_flashdata('msg_error','Automóvel atualizado com sucesso');
+				$this->index();
 			}
+		}
+	}
+
+	function validate_member($str)
+	{
+		$field_value = $str; //this is redundant, but it's to show you how
+		//the content of the fields gets automatically passed to the method
+
+		if($this->members_model->validate_member($field_value)){
+			return TRUE;
+		}else{
+			return FALSE;
 		}
 	}
 }
