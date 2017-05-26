@@ -65,7 +65,11 @@ class Frota extends CI_Controller {
 	}
 
 	public function save($id = -1){
-		$validation_rules = [['field'=>'','label'=>'','rules'=>'required|callback_validate_matricula','errors'=>['required'=>'É obrigatório indicar %s',]]];
+		$validation_rules = [
+				['field'=>'matricula','label'=>'Matricula','rules'=>'required|callback_validate_matricula','errors'=>['required'=>'É obrigatório indicar %s']],
+				['field'=>'modelo','label'=>'Modelo','rules'=>'callback_validate_option_exists[modelos,id]','errors'=>['required'=>'É obrigatório indicar %s']],
+				['field'=>'cor','label'=>'Cor','rules'=>'callback_validate_option_exists[cores,id]','errors'=>['required'=>'É obrigatório indicar %s']],
+			];
 		if($id == -1){
 			//new car
 		}else{
@@ -86,8 +90,12 @@ class Frota extends CI_Controller {
 		if($this->members_model->validate_member($field_value)){
 			return TRUE;
 		}else{
+			 $this->form_validation->set_message('validate_matricula', 'A {matricula} tem de respeitar o formato XX-XX-XX');
 			return FALSE;
 		}
+	}
+	function validate_option_exists($field_value,$table_name,$table_column){
+
 	}
 }
 ?>
