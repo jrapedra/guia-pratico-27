@@ -71,7 +71,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <button id="save" name="save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                        <button id="cancel" name="cancel" type="button" class="btn btn-warning"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</button>
+                        <button id="cancel" name="cancel" type="button" onclick="window.location='<?=base_url()?>frota'" class="btn btn-warning"><i class="fa fa-ban" aria-hidden="true"></i> Cancelar</button>
                     </div>
                 </div>
                 </fieldset>
