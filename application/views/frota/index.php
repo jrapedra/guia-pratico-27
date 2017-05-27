@@ -5,6 +5,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <br>
 <br>
 <div class="container-fluid">
+	<form action="<?=base_url()?>frota" class="form-inline" method="get">
+		<div class="form-group">
+			<select id="search_field" name="search_field" class="form-control">
+				<option value="modelo" <?=set_select('search_field','modelo'); ?> >Modelo</option>
+				<option value="matricula" <?=set_select('search_field','matricula'); ?> >Matricula</option>
+				<option value="fabricante" <?=set_select('search_field','fabricante'); ?> >Fabricante</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" id="search_value" name="search_value" value="<?=set_value('search_value')?>" placeholder="Pesquisa">
+		</div>
+		<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+	</form>
 	<div class="table-responsive">
 		<table class="table table-hover">
 			<thead>

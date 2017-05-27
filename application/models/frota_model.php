@@ -5,6 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * { Class to manage the cars in the database }
  */
 class Frota_model extends CI_Model{
+
+	private $automoveis_tbl = "automoveis";
+	
 	public function __construct(){
 		parent::__construct();
 		$this->load->database();
@@ -28,10 +31,15 @@ class Frota_model extends CI_Model{
 				->where("a.cor_id=c.id")
 				->where("m.fabricante-id=f.id");
 				
-				if($search['search_value'] ?? false){
-					$this->db->like("m.nome",$search['modelo']);
-					$this->db->like("matricula",$search['matricula']);
-					$this->db->like("f.nome",$search['fabricante']);
+				if(($search['search_value'] ?? false) && $search['search_value'] != ''){
+					$search_column = "f.nome";
+					if($search['search_field'] == 'modelo'){
+						$search_column = "m.nome";
+					}
+					if($search['search_field'] == 'matricula'){
+						$search_column = "matricula";
+					}
+					$this->db->like($search_column,$search['search_value']);
 				}
 				$this->db->limit($pg_size,$offset);
 		return $this->db->get()->result();
@@ -52,14 +60,15 @@ class Frota_model extends CI_Model{
 				->where("a.modelo_id=m.id")
 				->where("a.cor_id=c.id")
 				->where("m.fabricante-id=f.id");
-		if($search['modelo'] ?? false){
-			$this->db->like("m.nome",$search['modelo']);
-		}
-		if($search['matricula'] ?? false){
-			$this->db->like("matricula",$search['matricula']);
-		}
-		if($search['fabricante'] ?? false){
-			$this->db->like("f.nome",$search['fabricante']);
+		if(($search['search_value'] ?? false) && $search['search_value'] != ''){
+			$search_column = "f.nome";
+			if($search['search_field'] == 'modelo'){
+				$search_column = "m.nome";
+			}
+			if($search['search_field'] == 'matricula'){
+				$search_column = "matricula";
+			}
+			$this->db->like($search_column,$search['search_value']);
 		}
 		return $this->db->count_all_results();
 	}
@@ -72,7 +81,7 @@ class Frota_model extends CI_Model{
 	 */
 	public function deleteCar($id){
 		$this->db->where('id', $id);
-		$this->db->delete('automoveis');
+		$this->db->delete($this->automoveis_tbl);
 	}
 
 	/**
@@ -83,10 +92,16 @@ class Frota_model extends CI_Model{
 	 * @return     <type>  The car information.
 	 */
 	public function getCarInfo($id){
-		$this->db->from("automoveis")->where("id",$id);
+		$this->db->from($this->automoveis_tbl)->where("id",$id);
 		return $this->db->get()->row();
 	}
 
+	/**
+	 * [updateCarInfo description]
+	 * @param  [type] $id       [description]
+	 * @param  [type] $car_info [description]
+	 * @return [type]           [description]
+	 */
 	public function updateCarInfo($id,$car_info){
 		$update_data = [
 					'modelo_id' => $car_info['modelo'],
@@ -94,8 +109,18 @@ class Frota_model extends CI_Model{
 					'disponibilidade' => $car_info['disponibilidade'],
 					'matricula' => $car_info['matricula']
 					];
-		$this->db->where('id',$id)->update('automoveis',$update_data);
+		$this->db->where('id',$id)->update($this->automoveis_tbl,$update_data);
 		return $this->db->affected_rows() == 1;
+	}
+
+	public function insertCar($car_info){
+		$insert_data = [
+					'modelo_id' => $car_info['modelo'],
+					'cor_id' => $car_info['cor'],
+					'disponibilidade' => $car_info['disponibilidade'],
+					'matricula' => $car_info['matricula']
+					];
+		return $this->db->insert($this->automoveis_tbl,$car_info);
 	}
 }
 ?>
