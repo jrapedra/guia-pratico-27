@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Frota extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('fabricante_model');
 		$this->load->model('frota_model');
 		$this->load->library(array('session', 'form_validation', 'email'));
 		$this->load->helper(array('form', 'url'));
@@ -54,7 +55,6 @@ class Frota extends CI_Controller {
 	 * @param      <type>  $id     The identifier of the car
 	 */
 	public function edit($id){
-		$this->load->model('fabricante_model');
 		$data['fabricantes'] = $this->fabricante_model->getFabricantes();
 		$data['modelos'] = $this->fabricante_model->getModelos();
 		$data['cores'] = $this->fabricante_model->getCores();
@@ -65,17 +65,16 @@ class Frota extends CI_Controller {
 		$data['action_url'] = base_url('frota/save/'.$id);
 		$this->load->view('init',$data);
 	}
-
+	
 	public function save($id = -1){
 		$validation_rules = [
-				['field'=>'matricula','label'=>'Matricula','rules'=>'required|is_unique[automoveis.matricula]|regex_match[[0-9A-Z]{2}-[0-9A-Z]{2}-[0-9A-Z]{2}]','errors'=>['required'=>'É obrigatório indicar %s'],['is_unique'=>'a matricula %s já existe na base de dados'],['regex_match'=>'A matrícula 
-				%s tem de respeitar o formato XX-XX-XX']],
-				['field'=>'modelo','label'=>'Modelo','rules'=>'callback_validate_option_exists[modelos,id]','errors'=>['required'=>'É obrigatório indicar %s']],
-				['field'=>'cor','label'=>'Cor','rules'=>'callback_validate_option_exists[cores,id]','errors'=>['required'=>'É obrigatório indicar %s']],
+				['field'=>'modelo','label'=>'Modelo','rules'=>'callback_validate_option_exists[modelos.id]','errors'=>['required'=>'É obrigatório indicar %s']],
+				['field'=>'cor','label'=>'Cor','rules'=>'callback_validate_option_exists[cores.id]','errors'=>['required'=>'É obrigatório indicar %s']],
+				['field'=>'matricula','label'=>'Matricula','rules'=>'required|callback_validate_matricula','errors'=>['required'=>'É obrigatório indicar %s']]
 			];
 		$this->form_validation->set_rules($validation_rules);
 		if ($this->form_validation->run() == FALSE){
-			$this->load->view('myform');
+			$this->edit($id);
 		}else{
 			if($id == -1){
 				//new car
@@ -105,18 +104,17 @@ class Frota extends CI_Controller {
 
 	function validate_matricula($matricula)
 	{
-		$field_value = $str; //this is redundant, but it's to show you how
-		//the content of the fields gets automatically passed to the method
-
-		if($this->members_model->validate_member($field_value)){
+		if(preg_match("/([0-9][0-9]|[A-Z][A-Z])-([0-9][0-9]|[A-Z][A-Z])-([0-9][0-9]|[A-Z][A-Z])/", $matricula) == 1){
 			return TRUE;
-		}else{
-			 $this->form_validation->set_message('validate_matricula', 'A {matricula} tem de respeitar o formato XX-XX-XX');
-			return FALSE;
 		}
+		$this->form_validation->set_message('validate_matricula', 'A {matricula} tem de respeitar o formato XX-XX-XX');
+		return FALSE;
 	}
-	function validate_option_exists($field_value,$table_name,$table_column){
-
+	function validate_option_exists($field_value,$param){
+		$params = explode('.',$param);
+		$table = $params[0];
+		$column = $params[1];
+		return $this->fabricante_model->option_exists_in_database($table,$column,$field_value);
 	}
 }
 ?>
