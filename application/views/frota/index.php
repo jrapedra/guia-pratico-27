@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</select>
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" id="search_value" name="search_value" value="<?=set_value('search_value')?>" placeholder="Pesquisa">
+			<input type="text" class="form-control" id="search_value" name="search_value" value="<?=$search_value?>" placeholder="Pesquisa">
 		</div>
 		<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 	</form>
@@ -28,7 +28,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<th>Cor</th>
 					<th>Matricula</th>
 					<th>Disponíbilidade</th>
-					<th>Acções</th>
+					<?php if($loginuser){?>
+						<th>Acções</th>
+					<?php }?>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,15 +42,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<td><?=$car->cor ?></td>
 					<td><?=$car->matricula ?></td>
 					<td><?=$car->disponibilidade == 0 ? 'Indisponível' : 'Disponível'; ?></td>
-					<td>
-						<a href="<?=base_url()?>frota/edit/<?=$car->id?>">
-							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-						</a>
-						&nbsp;&nbsp;&nbsp;
-						<a data-item="<?=$car->marca.','.$car->matricula ?>" data-url="<?=base_url()?>frota/delete/<?=$car->id?>">
-							<i class="fa fa-trash" aria-hidden="true"></i>
-						</a>
-					</td>
+					<?php if($loginuser){?>
+						<td>
+							<a href="<?=base_url()?>frota/edit/<?=$car->id?>">
+								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+							</a>
+							&nbsp;&nbsp;&nbsp;
+							<a data-item="<?=$car->marca.','.$car->matricula ?>" data-url="<?=base_url()?>frota/delete/<?=$car->id?>">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</a>
+						</td>
+					<?php }?>
 				</tr>
 				<?php } ?>
 			</tbody>
