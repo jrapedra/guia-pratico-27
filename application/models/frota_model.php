@@ -95,14 +95,22 @@ class Frota_model extends CI_Model{
 		if($id == -1){
 			$result = new stdClass();
 			$result->matricula = "";
-			$result->fabricante = -1;
-			$result->modelo = -1;
-			$result->cor = -1;
+			$result->fabricante_id = -1;
+			$result->modelo_id = -1;
+			$result->cor_id = -1;
 			$result->disponibilidade = 1;
 
 			return $result;
 		}
-		$this->db->from($this->automoveis_tbl)->where("id",$id);
+		$this->db->select("m.id modelo_id,f.id fabricante_id,c.id cor_id, matricula, disponibilidade")
+				->from("automoveis a")
+				->from("fabricantes f")
+				->from("modelos m")
+				->from("cores c")
+				->where("a.modelo_id=m.id")
+				->where("a.cor_id=c.id")
+				->where("m.fabricante-id=f.id")
+				->where("a.id",$id);
 		return $this->db->get()->row();
 	}
 

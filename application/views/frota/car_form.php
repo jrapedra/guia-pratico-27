@@ -17,7 +17,7 @@
                         <select class="form-control" id="fabricante" name="fabricante">
                         <?php
                         foreach($fabricantes as $fabricante){?>
-                            <option <?=set_select('fabricante',$fabricante->id)?> value="<?=$fabricante->id?>"><?=$fabricante->nome?></option>
+                            <option <?=$carInfo->fabricante_id == $fabricante->id ? 'selected="selected"':'' ?> value="<?=$fabricante->id?>"><?=$fabricante->nome?></option>
                         <?php }?>
                         </select>
                     </div>
@@ -29,7 +29,7 @@
                     <div class="col-md-12">
                         <select class="form-control" id="modelo" name="modelo">
                         <?php foreach($modelos as $modelo){?>
-                            <option <?=set_select('modelo',$modelo->id)?> data-parent="<?=$modelo->fabricante_id?>" value="<?=$modelo->id?>"><?=$modelo->nome?></option>
+                            <option <?=$carInfo->modelo_id == $modelo->id ? 'selected="selected"':'' ?> data-parent="<?=$modelo->fabricante_id?>" value="<?=$modelo->id?>"><?=$modelo->nome?></option>
                         <?php }?>
                         </select>
                         <span class="text-danger"><?php echo form_error('modelo'); ?></span>
@@ -42,7 +42,7 @@
                     <div class="col-md-12">
                         <select class="form-control" id="cor" name="cor">
                         <?php foreach($cores as $cor){?>
-                            <option <?=set_select('cor',$cor->id)?> value="<?=$cor->id?>"><?=$cor->nome?></option>
+                            <option <?=$carInfo->cor_id == $cor->id ? 'selected="selected"':'' ?> value="<?=$cor->id?>"><?=$cor->nome?></option>
                         <?php }?>
                         </select>
                         <span class="text-danger"><?php echo form_error('cor'); ?></span>

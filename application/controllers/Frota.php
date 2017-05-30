@@ -65,6 +65,14 @@ class Frota extends CI_Controller {
 	 */
 	public function edit($id = -1){
 		if($this->session->has_userdata('loginuser')){
+			$validation_rules = [
+				['field'=>'modelo','label'=>'Modelo','rules'=>'callback_validate_option_exists[modelos.id]','errors'=>['required'=>'É obrigatório indicar %s']],
+				['field'=>'cor','label'=>'Cor','rules'=>'callback_validate_option_exists[cores.id]','errors'=>['required'=>'É obrigatório indicar %s']],
+				['field'=>'matricula','label'=>'Matricula','rules'=>'required|callback_validate_matricula','errors'=>['required'=>'É obrigatório indicar %s']]
+			];
+			$this->form_validation->set_rules($validation_rules);
+			$this->form_validation->set_data($this->input->post());
+			$this->form_validation->run();
 			$data['fabricantes'] = $this->fabricante_model->getFabricantes();
 			$data['modelos'] = $this->fabricante_model->getModelos();
 			$data['cores'] = $this->fabricante_model->getCores();
@@ -72,6 +80,7 @@ class Frota extends CI_Controller {
 			$data['form_title'] = $id == -1 ? "Novo carro" : "Editar carro";
 			$data['active_menu'] = 'frota';
 			$data['content'] = 'frota/car_form';
+			$data['id'] = $id;
 			$data['action_url'] = base_url('frota/save/'.$id);
 			$this->load->view('init',$data);
 		}else{
