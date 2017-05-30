@@ -3,7 +3,8 @@
 <br>
 <br>
 <div class="container">
-    <form id="form-car" class="form-horizontal" role="form" action="<?=$action_url ?>" method="POST">
+    <?= form_open($action_url,['role'=>'form'])?>
+    <!--form id="form-car" class="form-horizontal" role="form" action="<?=$action_url ?>" method="POST"-->
         <div class="row">
             <div class="col-md-6 col-md-offset-3 well">
                 <fieldset>

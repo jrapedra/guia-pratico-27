@@ -26,16 +26,21 @@ class Frota extends CI_Controller {
 			$filter['search_field'] = $this->input->get('search_field');
 		}
 		$validation_rules = [['field'=>'search_field','label'=>'Campo','rules'=>'required'],['field'=>'search_value','label'=>'Pesquisa','rules'=>'required']];
+		$this->form_validation->set_data($this->input->get());
 		$this->form_validation->set_rules($validation_rules);
+		$this->form_validation->run();
 		$config['base_url'] = base_url("frota/index");
 		$config['total_rows'] = $this->frota_model->getCarListCount($filter);
 		$config['per_page'] = 20;
 		$this->pagination->initialize($config);
 
+		$data['search_value'] = $this->input->get('search_value');
+		$data['search_field'] = $this->input->get('search_field');
 		$data['content'] = 'frota/index';
 		$data['cars'] = $this->frota_model->getCarList($filter, $offset);
 		$data['active_menu'] = 'frota';
 		$data['pagination'] = $this->pagination->create_links();
+		$data['loginuser'] = $this->session->has_userdata('loginuser');
 		$this->load->view('init',$data);
 	}
 
@@ -45,7 +50,12 @@ class Frota extends CI_Controller {
 	 * @param      <int>  $id     The identifier of the car
 	 */
 	public function delete($id){
-		$this->frota_model->deleteCar($id);
+		if($this->session->has_userdata('loginuser')){
+			$this->frota_model->deleteCar($id);
+		}else{
+			$this->session->set_flashdata('msg_type','alert-error');
+			$this->session->set_flashdata('msg_error','Sessão inválida!');
+		}
 		$this->index();
 	}
 
@@ -54,16 +64,22 @@ class Frota extends CI_Controller {
 	 *
 	 * @param      <type>  $id     The identifier of the car
 	 */
-	public function edit($id){
-		$data['fabricantes'] = $this->fabricante_model->getFabricantes();
-		$data['modelos'] = $this->fabricante_model->getModelos();
-		$data['cores'] = $this->fabricante_model->getCores();
-		$data['carInfo'] = $this->frota_model->getCarInfo($id);
-		$data['form_title'] = "Editar carro";
-		$data['active_menu'] = 'frota';
-		$data['content'] = 'frota/car_form';
-		$data['action_url'] = base_url('frota/save/'.$id);
-		$this->load->view('init',$data);
+	public function edit($id = -1){
+		if($this->session->has_userdata('loginuser')){
+			$data['fabricantes'] = $this->fabricante_model->getFabricantes();
+			$data['modelos'] = $this->fabricante_model->getModelos();
+			$data['cores'] = $this->fabricante_model->getCores();
+			$data['carInfo'] = $this->frota_model->getCarInfo($id);
+			$data['form_title'] = "Editar carro";
+			$data['active_menu'] = 'frota';
+			$data['content'] = 'frota/car_form';
+			$data['action_url'] = base_url('frota/save/'.$id);
+			$this->load->view('init',$data);
+		}else{
+			$this->session->set_flashdata('msg_type','alert-error');
+			$this->session->set_flashdata('msg_error','Sessão inválida!');
+			$this->index();
+		}
 	}
 	
 	public function save($id = -1){
