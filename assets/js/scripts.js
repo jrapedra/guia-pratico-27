@@ -25,6 +25,7 @@ $(document).ready(function(){
 var altera_modelo = function(){
 		let fabricante_selected = $("#fabricante").val();
 		$("#modelo option").removeClass('js-show').addClass('hidden');
+		$("#modelo option:selected").removeAttr('selected');
 		$('#modelo [data-parent="'+fabricante_selected+'"]').removeClass('hidden').addClass('js-show');
 		/*let firstVisibleValue = $('#modelo').find("option:not(:hidden)").val();
 		console.log(firstVisibleValue);
