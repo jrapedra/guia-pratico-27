@@ -1,4 +1,7 @@
+## Enable Mod Rewrite, this is only required once in each .htaccess file
 RewriteEngine On
+
+## Codeiniter
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]

@@ -84,3 +84,5 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 defined('PG_ITEMS_PER_PAGE')   OR define('PG_ITEMS_PER_PAGE',10);
+
+defined('GOOGLE_CAPTCHA_KEY')  OR define('GOOGLE_CAPTCHA_KEY', '6LdvCSMUAAAAAGSssCfkprrj6bgnBDpooOQV95LT');

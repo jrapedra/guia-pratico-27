@@ -20,7 +20,8 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form name="form-login" role="form" action="<?php echo base_url(); ?>auth/login" method="post" class="login-form">
+                        <?php echo form_open(base_url( 'auth/login' ), array( 'name' => 'form-login', 'class' => 'login-form' ));?>
+                        <!--<form name="namerole="form-login="<?php echo base_url(); ?>auth/login" method="post" class="login-form">-->
                             <div class="form-group">
                                 <label class="sr-only" for="form-login-username">Nome de utilizador</label>
                                 <input type="text" name="form-login-username" placeholder="Nome de utilizador..." class="for-username form-control" id="form-login-username">
@@ -50,7 +51,8 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form name="form-register" role="form" action="<?php echo base_url(); ?>auth/register" method="post" class="registration-form">
+                        <?php echo form_open(base_url( 'auth/register' ), array( 'name' => 'form-register', 'class' => 'registration-form' ));?>
+                        <!--<form name="form-register" role="form" action="<?php echo base_url(); ?>auth/register" method="post" class="registration-form">-->
                             <div class="form-group">
                                 <label class="sr-only" for="form-register-firstname">Primeiro nome</label>
                                 <input type="text" name="form-register-firstname" placeholder="Primeiro nome..." class="form-username form-control" id="form-register-firstname" value="<?php echo set_value('form-register-firstname'); ?>">

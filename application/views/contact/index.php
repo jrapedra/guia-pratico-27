@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <br />
 <div class="container">
-    <form id="form-contact" class="form-horizontal" role="form" action="<?php base_url() ?>contact" method="POST">
+    <?php echo form_open(base_url( 'welcome/contact' ), array( 'id' => 'form-contact', 'class' => 'form-horizontal' ));?>
+    <!--<form id="form-contact" class="form-horizontal" role="form" action="<?php base_url() ?>contact" method="POST">-->
         <div class="row">
             <div class="col-md-6 col-md-offset-3 well">
                 <fieldset>
@@ -47,10 +48,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <span class="text-danger"><?php echo form_error('message'); ?></span>
                     </div>
                 </div>
-
+                <div class="g-recaptcha" data-sitekey="6LdvCSMUAAAAAAuCam65RX3YBsSMXLUwkSMILZw0"></div>
+                <span class="text-danger"><?php echo form_error('g-recaptcha-response'); ?></span>
+                <!--
+                <script type="text/javascript">
+                    var onSubmit = function(token) {
+                      console.log('success!');
+                    };
+                    var onloadCallback = function() {
+                      grecaptcha.render('submit', {
+                        'sitekey' : '6LdvCSMUAAAAAAuCam65RX3YBsSMXLUwkSMILZw0',
+                        'callback' : onSubmit
+                      });
+                    };
+                </script>
+                -->
                 <div class="form-group">
                     <div class="col-md-12">
                         <input name="submit" type="submit" class="btn btn-primary" value="Enviar" />
+                        <!--
+                        <button class="g-recaptcha btn btn-primary" data-sitekey="6LfTSCMUAAAAACQwoOR1r3PWiMULmq2r_LoKRCa2" data-callback="onloadCallback">
+                            Enviar
+                        </button>
+                        -->
                     </div>
                 </div>
                 </fieldset>

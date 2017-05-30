@@ -1,0 +1,36 @@
+## Desativar assinatura do servidor
+ServerSignature Off
+
+## Enable Mod Rewrite, this is only required once in each .htaccess file
+RewriteEngine On
+
+## Bloquear acesso a pasta com password
+AuthName "Área privada"
+AuthUserFile "C:\Users\Turma A\Documents\dev\xampp\htdocs\guia-pratico-27\membros\.htpasswd"
+AuthType Basic
+require valid-user
+
+## Bloquear o acesso a ficheiros com password
+# password protect single file
+<FilesMatch "protected.html">
+ AuthName "Member Only"
+ AuthType Basic
+ AuthUserFile "C:\Users\Turma A\Documents\dev\xampp\htdocs\guia-pratico-27\membros\.htpasswd"
+ require valid-user
+</FilesMatch>
+
+## Redireccionar url
+## Options +FollowSymLinks
+## RewriteEngine On
+## RewriteRule .blog http://localhost/guia-pratico-27/ [R=301,L]
+
+## Bloquear acesso por IP
+order allow,deny
+deny from 255.0.0.0
+deny from 123.45.6.
+allow from all
+
+## Codeiniter
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]

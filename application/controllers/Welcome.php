@@ -114,6 +114,7 @@ class Welcome extends CI_Controller {
         $this->form_validation->set_rules('email', 'E-mail', 'trim|required|callback_email_validation');
         $this->form_validation->set_rules('subject', 'Assunto', 'required');
         $this->form_validation->set_rules('message', 'Mensagem', 'required');
+		$this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'required|callback_captcha_validation');
 
         //run validation on form input
         if ($this->form_validation->run() == FALSE)
@@ -193,6 +194,14 @@ class Welcome extends CI_Controller {
         {
             return TRUE;
         }
+    }
+
+    public function captcha_validation($str)
+    {
+    	$resposta = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".GOOGLE_CAPTCHA_KEY."&response=".$str."&remoteip=".$_SERVER['REMOTE_ADDR']);
+        $response = json_decode($resposta);
+        $this->form_validation->set_message('captcha_validation', 'Tem de preencher o campo %s');
+        return $response->success;
     }
 
 }
