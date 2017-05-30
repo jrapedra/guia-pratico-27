@@ -5,6 +5,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
   	<title>Guia Prático 27 - Companhia internacional de rent-a-car</title>
+  	<link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif">
 	<!-- Minified bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- Font Awesome CSS -->

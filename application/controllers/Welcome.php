@@ -156,9 +156,7 @@ class Welcome extends CI_Controller {
                 // mail sent
                 $this->session->set_flashdata('msg_type','alert-success');
                 $this->session->set_flashdata('msg_error','O seu e-mail foi enviado com sucesso. Obrigado!');
-				$data['active_menu'] = 'contact';
-				$data['content'] = 'contact/index';
-                $this->load->view('init', $data);
+				redirect('welcome/contact/index');
             }
             else
             {
