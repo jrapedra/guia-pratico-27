@@ -18,4 +18,21 @@ $(document).ready(function(){
 		});
 	});
 
+	$("#fabricante").on('change',altera_modelo);
+	altera_modelo();
 })
+
+var altera_modelo = function(){
+		let fabricante_selected = $("#fabricante").val();
+		$("#modelo option").removeClass('js-show').addClass('hidden');
+		$("#modelo option:selected").removeAttr('selected');
+		$('#modelo [data-parent="'+fabricante_selected+'"]').removeClass('hidden').addClass('js-show');
+		/*let firstVisibleValue = $('#modelo').find("option:not(:hidden)").val();
+		console.log(firstVisibleValue);
+		$('#modelo').val(firstVisibleValue);*/
+		$("#modelo option.js-show:first").attr('selected','selected');
+		/*let firstVisibleValue = $("#modelo option .js-show").val();
+		$('#modelo').val(firstVisibleValue);
+
+		$('.id_100 option[value=val2]').attr('selected','selected');*/
+	}

@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</a>
 							&nbsp;&nbsp;&nbsp;
-							<a data-item="<?=$car->marca.','.$car->matricula ?>" data-url="<?=base_url()?>frota/delete/<?=$car->id?>">
+							<a class="js-delete-car" data-item="<?=$car->marca.','.$car->matricula ?>" data-url="<?=base_url()?>frota/delete/<?=$car->id?>">
 								<i class="fa fa-trash" aria-hidden="true"></i>
 							</a>
 						</td>
