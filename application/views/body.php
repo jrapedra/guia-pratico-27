@@ -1,13 +1,11 @@
 <body>
-	<?php $this->load->view('header'); ?>
 	<?php
+		$this->load->view('header');
 		if($this->session->flashdata('msg_type') !== null){
 			$this->load->view('errors');
 			$this->session->unset_userdata('msg_type');
 		}
-		else{
-			$this->load->view($content);
-		}
+		$this->load->view($content);
+		$this->load->view('footer');
 	?>
-	<?php $this->load->view('footer'); ?>
 </body>

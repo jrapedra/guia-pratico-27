@@ -48,6 +48,11 @@ header.carousel .fill {
     font-size: 100px;
 }
 
+/**/
+.hidden{
+    display: none;
+}
+
 /* Pricing Page Styles */
 
 .price {

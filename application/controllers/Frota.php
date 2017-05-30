@@ -56,7 +56,6 @@ class Frota extends CI_Controller {
 			$this->session->set_flashdata('msg_type','alert-error');
 			$this->session->set_flashdata('msg_error','Sessão inválida!');
 		}
-		$this->index();
 	}
 
 	/**
@@ -70,7 +69,7 @@ class Frota extends CI_Controller {
 			$data['modelos'] = $this->fabricante_model->getModelos();
 			$data['cores'] = $this->fabricante_model->getCores();
 			$data['carInfo'] = $this->frota_model->getCarInfo($id);
-			$data['form_title'] = "Editar carro";
+			$data['form_title'] = $id == -1 ? "Novo carro" : "Editar carro";
 			$data['active_menu'] = 'frota';
 			$data['content'] = 'frota/car_form';
 			$data['action_url'] = base_url('frota/save/'.$id);
@@ -78,7 +77,7 @@ class Frota extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('msg_type','alert-error');
 			$this->session->set_flashdata('msg_error','Sessão inválida!');
-			$this->index();
+			redirect('frota/index');
 		}
 	}
 	
@@ -97,7 +96,7 @@ class Frota extends CI_Controller {
 				if($this->frota_model->insertCar($this->input->post())){
 					$this->session->set_flashdata('msg_type','alert-success');
 					$this->session->set_flashdata('msg_error','Automóvel inserido com sucesso');
-					$this->index();
+					redirect('frota/index');
 				}else{
 					$this->session->set_flashdata('msg_type','alert-error');
 					$this->session->set_flashdata('msg_error','Erro ao inserir automóvel');
@@ -108,11 +107,11 @@ class Frota extends CI_Controller {
 				if($this->frota_model->updateCarInfo($id,$this->input->post())){
 					$this->session->set_flashdata('msg_type','alert-success');
 					$this->session->set_flashdata('msg_error','Automóvel atualizado com sucesso');
-					$this->index();
+					redirect('frota/index');
 				}else{
 					$this->session->set_flashdata('msg_type','alert-error');
 					$this->session->set_flashdata('msg_error','Erro ao atualizar automóvel');
-					$this->edit();
+					redirect('frota/edit');
 				}
 			}
 		}

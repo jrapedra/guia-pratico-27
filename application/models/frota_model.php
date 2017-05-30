@@ -92,6 +92,16 @@ class Frota_model extends CI_Model{
 	 * @return     <type>  The car information.
 	 */
 	public function getCarInfo($id){
+		if($id == -1){
+			$result = new stdClass();
+			$result->matricula = "";
+			$result->fabricante = -1;
+			$result->modelo = -1;
+			$result->cor = -1;
+			$result->disponibilidade = 1;
+
+			return $result;
+		}
 		$this->db->from($this->automoveis_tbl)->where("id",$id);
 		return $this->db->get()->row();
 	}
@@ -120,7 +130,7 @@ class Frota_model extends CI_Model{
 					'disponibilidade' => $car_info['disponibilidade'],
 					'matricula' => $car_info['matricula']
 					];
-		return $this->db->insert($this->automoveis_tbl,$car_info);
+		return $this->db->insert($this->automoveis_tbl,$insert_data);
 	}
 }
 ?>
