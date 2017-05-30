@@ -64,7 +64,7 @@ class Frota extends CI_Controller {
 	 *
 	 * @param      <type>  $id     The identifier of the car
 	 */
-	public function edit($id){
+	public function edit($id = -1){
 		if($this->session->has_userdata('loginuser')){
 			$data['fabricantes'] = $this->fabricante_model->getFabricantes();
 			$data['modelos'] = $this->fabricante_model->getModelos();

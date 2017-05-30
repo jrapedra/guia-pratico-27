@@ -17,6 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<input type="text" class="form-control" id="search_value" name="search_value" value="<?=$search_value?>" placeholder="Pesquisa">
 		</div>
 		<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+		<a href="<?=base_url()?>frota/edit"><i class="fa fa-plus"></i></a>
 	</form>
 	<div class="table-responsive">
 		<table class="table table-hover">
